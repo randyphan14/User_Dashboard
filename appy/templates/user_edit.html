@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+
+<body>
+    <div class="nav">
+        <h1>Test App</h1>
+        <h3><a href="/user_dashboard">Dashboard</a></h3>
+        <h3><a href="/users/show/{{user.id}}">Profile</a></h3>
+        <h3><a href="/clear">Log off</a></h3>
+    </div>
+
+    <div class="mid">
+        <h1>Edit Profile</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <h3>{{message}}</h3>
+            {% endfor %}
+        {% endif %}
+        
+        <div class="content">
+            <h2>Edit Information</h2>
+            <form action="/update_user1/{{user.id}}" method="post">
+                {% csrf_token %}
+                <p>Email:<input class="fields" type="text" name="email" value="{{user.email}}"></p>
+                <p>First Name:<input class="fields" type="text" name="first_name" value="{{user.first_name}}"></p>
+                <p>Last Name:<input class="fields" type="text" name="last_name" value="{{user.last_name}}"></p>
+                <input class="btn" type="submit" value="Save"></p>
+            </form>
+
+        </div>
+
+        <div class="content">
+            <h2>Change Password</h2>
+            <form action="/update_password/{{user.id}}" method="post">
+                {% csrf_token %}
+                <p>Password:<input class="fields" type="password" name="password"></p>
+                <p>Confirm Password:<input class="fields" type="password" name="password1"></p>
+                <input class="btn" type="submit" value="Update Password"></p>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <h2>Edit Description</h2>
+        <form action="/update_desc/{{user.id}}" method="post">
+            {% csrf_token %}
+            <input type='text' name='desc'>
+            <input class="btn" type="submit" value="Save"></p>
+        </form>
+    </div>
+</body>
+
+</html>

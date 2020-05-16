@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+</head>
+<body>
+    <div class="nav">
+        <h1>Test App</h1>
+        <h3><a href="/user_dashboard">Dashboard</a></h3>
+        <h3><a href="/users/show/{{primary.id}}">Profile</a></h3>
+        <h3><a href="/clear">Log off</a></h3>
+    </div>
+
+    <div class="header">
+        <h1>{{user.first_name}} {{user.last_name}}</h1>
+        <h3>Registered at: {{user.created_at}}</h3>
+        <h3>User ID: {{user.id}}</h3>
+        <h3>Email address: {{user.email}}</h3>
+        <h3>Description: {{user.desc}}</h3>
+    </div>
+
+    <div class="wall">
+        <h2>Leave a message for {{user.first_name}}</h2>
+        <form action="/post_message/{{user.id}}" method="post">
+            {% csrf_token %}
+            <textarea name="desc"></textarea>
+            <button type='submit'>Post</button>
+        </form>
+
+        {% for msg in messages %}
+        <div class="user_messages">
+            {{msg.author.first_name}} {{msg.author.last_name}} {{msg.updated_at}}
+            <p>{{msg.desc}}</p>
+
+
+            <div class="user_comments">
+                {% for comment in msg.messages.all %}
+                {{comment.author.first_name}} {{comment.author.last_name}} {{comment.updated_at}}
+                <p>{{comment.desc}}</p>
+                {% endfor %}
+
+            </div>
+
+
+            <form action="/comment/{{msg.id}}" method="POST">
+                {% csrf_token %}
+                <textarea name="cmnt" placeholder="Leave {{msg.user.first_name}} a comment..."></textarea>
+                <button type='submit'>Post a comment</button>
+            </form>
+
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

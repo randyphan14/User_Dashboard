@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <div class="nav">
+        <h1>Test App</h1>
+        <h3><a href="/user_dashboard">Dashboard</a></h3>
+        <h3><a href="/users/show/{{primary.id}}">Profile</a></h3>
+        <h3><a href="/clear">Log off</a></h3>
+    </div>
+
+    <div class="content">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>created_at</th>
+                    <th>user_level</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td><a href = "/users/show/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.created_at}}</td>
+                    <td>{{user.user_level}}</td>
+                    <td>
+                        {% if user == primary %}
+                        <a href = "/users/edit">edit your profile</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</body>
+</html>

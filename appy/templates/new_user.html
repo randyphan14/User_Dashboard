@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+</head>
+<body>
+    <div class="nav">
+        <h1>Test App</h1>
+        <h3><a href="/user_dashboard">Dashboard</a></h3>
+        <h3><a href="/users/show/{{user.id}}">Profile</a></h3>
+        <h3><a href="/clear">Log off</a></h3>
+    </div>
+
+    <div class="content">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <h3>{{message}}</h3>
+            {% endfor %}
+        {% endif %}
+
+        <form action="/create_user" method="post">
+            {% csrf_token %}
+            <p>Email:<input class="fields" type="text" name="email"></p>
+            <p>First Name:<input class="fields" type="text" name="first_name"></p>
+            <p>Last Name:<input class="fields" type="text" name="last_name"></p>
+            <p>Password:<input class="fields" type="password" name="password"></p>
+            <p>Confirm Password:<input class="fields" type="password" name="password1"></p>
+            <input class="btn" type="submit" value="Register"></p>
+        </form>
+
+
+        <form action="/user_dashboard" method="post">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Return to Dashboard"></p>
+        </form>
+    </div>
+</body>
+</html>
